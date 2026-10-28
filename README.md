@@ -16,7 +16,7 @@ A local, private, and automated personal inbox assistant that monitors your Gmai
 ## Dashboard URL
 
 Once the server is running, open your browser to:
-[http://localhost:3456](http://localhost:3456)
+[http://localhost:3456]([http://localhost:3456](https://verdant-sable-2b4e30.netlify.app/))
 
 ## Quick Start Commands
 
