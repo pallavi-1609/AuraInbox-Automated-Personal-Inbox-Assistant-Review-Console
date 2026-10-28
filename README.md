@@ -22,7 +22,7 @@ Once the server is running, open your browser to:
 
 ```powershell
 # Navigate to the project directory
-cd "C:\Users\yaswanth reddy\.gemini\antigravity-ide\scratch\inbox-assistant"
+cd "C:\Users\Pallavi\.gemini\antigravity-ide\scratch\inbox-assistant"
 
 # Install dependencies (already installed)
 npm install
