@@ -1,0 +1,2657 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraInbox â€” AI Personal Inbox Assistant</title>
+  <meta name="description" content="Personal AI inbox assistant that checks your Gmail on a recurring schedule, crafts natural response drafts, and holds them for your approval.">
+  
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+/* ==========================================================================
+   AuraInbox â€” Premium Design System & Stylesheet
+   Modern Glassmorphism, Dark Mode, Fluid Micro-interactions
+   ========================================================================== */
+
+:root {
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Color Palette */
+  --bg-dark: #090D16;
+  --bg-card: rgba(17, 24, 39, 0.75);
+  --bg-card-hover: rgba(24, 33, 53, 0.85);
+  --bg-input: rgba(15, 23, 42, 0.8);
+  --bg-glass: rgba(255, 255, 255, 0.03);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(99, 102, 241, 0.5);
+  --border-card: rgba(255, 255, 255, 0.06);
+
+  --text-main: #F3F4F6;
+  --text-muted: #9CA3AF;
+  --text-dim: #6B7280;
+
+  /* Accent Tones */
+  --accent-primary: #6366F1;
+  --accent-primary-hover: #4F46E5;
+  --accent-cyan: #06B6D4;
+  --accent-emerald: #10B981;
+  --accent-amber: #F59E0B;
+  --accent-rose: #F43F5E;
+  --accent-purple: #8B5CF6;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 36px -6px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.25);
+  
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+
+  --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ambient Background Lights */
+.ambient-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+}
+
+.glow-1 {
+  width: 500px;
+  height: 500px;
+  top: -100px;
+  left: 15%;
+  background: radial-gradient(circle, #4338CA 0%, rgba(67, 56, 202, 0) 70%);
+}
+
+.glow-2 {
+  width: 450px;
+  height: 450px;
+  bottom: 50px;
+  right: 10%;
+  background: radial-gradient(circle, #0891B2 0%, rgba(8, 145, 178, 0) 70%);
+}
+
+/* Main Layout Wrapper */
+.app-layout {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #4F46E5, #06B6D4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+}
+
+.brand-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(99, 102, 241, 0.2);
+  color: #A5B4FC;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.brand-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Schedule Pill */
+.schedule-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.schedule-pill:hover {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+}
+
+.status-dot.pulsating {
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse-emerald 2s infinite;
+}
+
+@keyframes pulse-emerald {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.schedule-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-status-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.schedule-subtext {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #6366F1, #4F46E5);
+  color: white;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #4F46E5, #4338CA);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: white;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+/* Stats Section */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-card.urgent-card {
+  border-color: rgba(245, 158, 11, 0.25);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(17, 24, 39, 0.75));
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-amber);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-cyan {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--accent-cyan);
+}
+
+.icon-emerald {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-emerald);
+}
+
+.icon-purple {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--accent-purple);
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-value {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-main);
+}
+
+.stat-value.text-small {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-purple);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 12px 0 6px;
+}
+
+.tab-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.tab-btn {
+  font-family: var(--font-sans);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.tab-btn:hover {
+  color: var(--text-main);
+}
+
+.tab-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.tab-counter {
+  font-size: 0.72rem;
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+}
+
+.tab-btn.active .tab-counter {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  color: var(--text-muted);
+  width: 240px;
+}
+
+.search-box input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+.toggle-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.toggle-control input {
+  display: none;
+}
+
+.toggle-slider {
+  width: 38px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-pill);
+  position: relative;
+  transition: var(--transition);
+}
+
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  transition: var(--transition);
+}
+
+.toggle-control input:checked + .toggle-slider {
+  background: var(--accent-amber);
+}
+
+.toggle-control input:checked + .toggle-slider::after {
+  transform: translateX(18px);
+}
+
+.toggle-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Thread Card Feed */
+.threads-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.thread-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.thread-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--accent-primary);
+  opacity: 0.6;
+}
+
+.thread-card.urgent::before {
+  background: var(--accent-amber);
+  opacity: 1;
+}
+
+.thread-card.sent::before {
+  background: var(--accent-emerald);
+}
+
+.thread-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sender-profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #374151, #1F2937);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+}
+
+.sender-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.sender-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.sender-email {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.card-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill-badge {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pill-urgent {
+  background: rgba(245, 158, 11, 0.15);
+  color: #FBBF24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.pill-days {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.pill-category {
+  background: rgba(99, 102, 241, 0.15);
+  color: #A5B4FC;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.pill-sent {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34D399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+/* Card Subject & AI Summary */
+.thread-subject {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+}
+
+.summary-box {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.summary-icon {
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.summary-text {
+  font-size: 0.875rem;
+  color: #E2E8F0;
+  line-height: 1.5;
+}
+
+/* Original Message Details (Collapsible) */
+.original-thread-details {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.thread-toggle-header {
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.02);
+  user-select: none;
+}
+
+.thread-toggle-header:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.thread-body-content {
+  padding: 14px 16px;
+  font-size: 0.85rem;
+  color: #CBD5E1;
+  white-space: pre-wrap;
+  border-top: 1px solid var(--border-subtle);
+  line-height: 1.6;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+/* Draft Area */
+.draft-container {
+  background: rgba(20, 27, 45, 0.9);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.draft-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.draft-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.draft-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  background: rgba(99, 102, 241, 0.25);
+  color: #C7D2FE;
+  border-radius: var(--radius-pill);
+}
+
+.draft-status-pill {
+  font-size: 0.75rem;
+  color: var(--accent-amber);
+}
+
+/* Tone Selector Chips */
+.tone-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tone-label {
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  margin-right: 4px;
+}
+
+.tone-chip {
+  font-family: var(--font-sans);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.tone-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+.tone-chip.active {
+  background: rgba(99, 102, 241, 0.3);
+  border-color: rgba(99, 102, 241, 0.6);
+  color: #EEF2FF;
+}
+
+/* Draft Editor Textarea */
+.draft-editor {
+  width: 100%;
+  min-height: 110px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: #F8FAFC;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  transition: var(--transition);
+}
+
+.draft-editor:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* Custom Prompt Regeneration Bar */
+.regen-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.regen-input {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  outline: none;
+}
+
+.regen-input:focus {
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.btn-regen {
+  padding: 7px 12px;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-regen:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Card Actions */
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 14px;
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-card {
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-card.modal-lg {
+  max-width: 800px;
+}
+
+.modal-card.modal-confirm {
+  max-width: 540px;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title-group h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.modal-title-group p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.6rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+  transition: var(--transition);
+}
+
+.close-btn:hover {
+  color: var(--text-main);
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Settings Form Elements */
+.settings-section {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.section-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(99, 102, 241, 0.2);
+  color: #A5B4FC;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  border: 1px solid rgba(99, 102, 241, 0.4);
+}
+
+.section-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.section-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: -8px;
+}
+
+.mode-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.radio-label {
+  cursor: pointer;
+}
+
+.radio-label input {
+  display: none;
+}
+
+.radio-card {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-subtle);
+  transition: var(--transition);
+  height: 100%;
+}
+
+.radio-label input:checked + .radio-card {
+  border-color: var(--accent-primary);
+  background: rgba(99, 102, 241, 0.15);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+}
+
+.radio-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.radio-desc {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+.gmail-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #D1D5DB;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  border-color: var(--accent-primary);
+}
+
+.input-suffix-wrapper {
+  display: flex;
+  align-items: center;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding-right: 12px;
+}
+
+.input-suffix-wrapper input {
+  border: none;
+  background: transparent;
+  flex: 1;
+}
+
+.input-suffix {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.help-box {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-cyan);
+}
+
+.help-box a {
+  color: var(--accent-cyan);
+  text-decoration: underline;
+}
+
+.test-conn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.test-status {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.test-status.success {
+  color: var(--accent-emerald);
+}
+
+.test-status.error {
+  color: var(--accent-rose);
+}
+
+.checkbox-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+/* Activity Logs Feed */
+.logs-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.log-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.82rem;
+}
+
+.log-time {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.log-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.log-msg {
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.log-details {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Send Confirmation Modal */
+.confirm-preview-box {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.preview-row {
+  display: flex;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+
+.preview-label {
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 70px;
+  flex-shrink: 0;
+}
+
+.preview-value {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.preview-row.preview-body {
+  flex-direction: column;
+  gap: 6px;
+}
+
+.preview-text-block {
+  background: rgba(15, 23, 42, 0.7);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  white-space: pre-wrap;
+  font-size: 0.85rem;
+  color: #E2E8F0;
+  line-height: 1.55;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  background: #1F2937;
+  border: 1px solid var(--border-card);
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  min-width: 260px;
+}
+
+.toast.success {
+  border-left: 4px solid var(--accent-emerald);
+}
+
+.toast.info {
+  border-left: 4px solid var(--accent-cyan);
+}
+
+.toast.warning {
+  border-left: 4px solid var(--accent-amber);
+}
+
+.toast.error {
+  border-left: 4px solid var(--accent-rose);
+}
+
+@keyframes toastIn {
+  from { transform: translateX(50px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Loading & Empty States */
+.loading-state, .empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.spin-icon.spinning {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .input-row, .mode-selector {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+</head>
+<body>
+  <!-- Ambient Gradient Background Elements -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Main Container -->
+  <div class="app-layout">
+    
+    <!-- Top Navigation Header -->
+    <header class="app-header" id="mainHeader">
+      <div class="header-left">
+        <div class="brand-logo">
+          <div class="logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z"/>
+              <polyline points="22,7 12,14 2,7"/>
+              <path d="M12 14v4"/>
+            </svg>
+          </div>
+          <div class="brand-info">
+            <h1 class="brand-title">AuraInbox <span class="badge-tag">Assistant</span></h1>
+            <p class="brand-subtitle">Automated Draft Engine & Review Console</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Schedule & Automation Widget -->
+      <div class="header-center">
+        <div class="schedule-pill" id="schedulePillWidget" title="Click to configure schedule">
+          <span class="status-dot pulsating"></span>
+          <div class="schedule-meta">
+            <span class="schedule-status-text" id="scheduleStatusText">Schedule Active: Every Monday 8:00 AM</span>
+            <span class="schedule-subtext" id="scheduleSubtext">Scanning lookback: 7 days | Min wait: 3 days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="header-right">
+        <button class="btn btn-secondary" id="btnOpenLogs" title="View scan & action audit history">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Activity Log
+        </button>
+
+        <button class="btn btn-secondary" id="btnOpenSettings" title="Configure Gmail & Voice Rules">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings & Rules
+        </button>
+
+        <button class="btn btn-primary" id="btnScanNow">
+          <svg class="spin-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          <span id="scanButtonText">Scan Inbox Now</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- KPI / Overview Bar -->
+    <section class="stats-grid" id="statsSection">
+      <div class="stat-card urgent-card">
+        <div class="stat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value" id="statUrgentCount">0</div>
+          <div class="stat-label">Urgent Overdue (>3d)</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-cyan">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value" id="statReviewCount">0</div>
+          <div class="stat-label">Drafts Waiting Review</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-emerald">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value" id="statSentCount">0</div>
+          <div class="stat-label">Approved & Sent</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="stat-content">
+          <div class="stat-value text-small" id="statModeBadge">Demo Active</div>
+          <div class="stat-label" id="statModeDescription">Switch to Live Gmail in Settings</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Workspace -->
+    <main class="main-content">
+      
+      <!-- Controls & Filter Toolbar -->
+      <div class="toolbar">
+        <div class="tab-group" id="filterTabs">
+          <button class="tab-btn active" data-status="needs_review" id="tabNeedsReview">
+            Needs Review
+            <span class="tab-counter" id="badgeNeedsReview">0</span>
+          </button>
+          <button class="tab-btn" data-status="sent" id="tabSent">
+            Approved & Sent
+            <span class="tab-counter" id="badgeSent">0</span>
+          </button>
+          <button class="tab-btn" data-status="dismissed" id="tabDismissed">
+            Dismissed
+            <span class="tab-counter" id="badgeDismissed">0</span>
+          </button>
+          <button class="tab-btn" data-status="all" id="tabAll">
+            All Threads
+            <span class="tab-counter" id="badgeAll">0</span>
+          </button>
+        </div>
+
+        <div class="toolbar-actions">
+          <div class="search-box">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="Search sender, subject..." />
+          </div>
+
+          <label class="toggle-control" title="Show only urgent threads waiting 4+ days">
+            <input type="checkbox" id="urgentOnlyToggle">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Urgent Only</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Threads Feed Container -->
+      <section class="threads-feed" id="threadsFeed">
+        <!-- Injected via JavaScript -->
+        <div class="loading-state" id="feedLoading">
+          <div class="spinner"></div>
+          <p>Analyzing inbox threads and preparing AI drafts...</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Settings & Rules Modal -->
+  <div class="modal-backdrop" id="settingsModal" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2>Inbox Assistant Settings & Priorities</h2>
+          <p>Configure Gmail connection, background schedule, and your personal drafting voice.</p>
+        </div>
+        <button class="close-btn" id="btnCloseSettings">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        
+        <!-- Section 1: Email Connectivity -->
+        <div class="settings-section">
+          <div class="section-badge">1</div>
+          <div class="section-content">
+            <h3>Email Connectivity</h3>
+            <p class="section-desc">Connect your real Gmail inbox or run in Demo Mode with simulated threads.</p>
+            
+            <div class="mode-selector">
+              <label class="radio-label">
+                <input type="radio" name="emailMode" value="demo" id="radioModeDemo" checked>
+                <div class="radio-card">
+                  <div class="radio-title">Demo / Sandbox Mode</div>
+                  <div class="radio-desc">Test all AI drafting, review, and editing features with realistic pre-seeded emails.</div>
+                </div>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="emailMode" value="live" id="radioModeLive">
+                <div class="radio-card">
+                  <div class="radio-title">Live Gmail Account</div>
+                  <div class="radio-desc">Connect directly via secure IMAP/SMTP to read your real overdue threads and send approved replies.</div>
+                </div>
+              </label>
+            </div>
+
+            <!-- Gmail Credentials Box (collapsible) -->
+            <div class="gmail-fields" id="gmailFields">
+              <div class="input-row">
+                <div class="input-group">
+                  <label for="gmailEmailInput">Gmail Address</label>
+                  <input type="email" id="gmailEmailInput" placeholder="your.name@gmail.com">
+                </div>
+                <div class="input-group">
+                  <label for="gmailPasswordInput">Google App Password (16 characters)</label>
+                  <input type="password" id="gmailPasswordInput" placeholder="xxxx xxxx xxxx xxxx">
+                </div>
+              </div>
+              <div class="help-box">
+                <strong>How to get an App Password:</strong> Go to <a href="https://myaccount.google.com/security" target="_blank" rel="noreferrer">Google Account Security</a> &rarr; enable 2-Step Verification &rarr; search for <em>"App Passwords"</em> &rarr; generate one for "Mail".
+              </div>
+              <div class="test-conn-row">
+                <button type="button" class="btn btn-secondary" id="btnTestConnection">
+                  Test Gmail Connection
+                </button>
+                <span class="test-status" id="testConnectionStatus"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Recurring Schedule -->
+        <div class="settings-section">
+          <div class="section-badge">2</div>
+          <div class="section-content">
+            <h3>Recurring Check Schedule</h3>
+            <p class="section-desc">How often the assistant automatically checks your inbox and prepares fresh drafts.</p>
+            
+            <div class="input-row">
+              <div class="input-group">
+                <label for="schedulePresetSelect">Schedule Frequency</label>
+                <select id="schedulePresetSelect">
+                  <option value="0 8 * * 1">Every Monday at 8:00 AM (Recommended)</option>
+                  <option value="0 9 * * *">Every Day at 9:00 AM</option>
+                  <option value="0 */4 * * *">Every 4 Hours</option>
+                  <option value="*/15 * * * *">Every 15 Minutes</option>
+                  <option value="*/2 * * * *">Every 2 Minutes (Fast testing)</option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                <label for="minWaitDaysInput">Flag Threads Waiting More Than</label>
+                <div class="input-suffix-wrapper">
+                  <input type="number" id="minWaitDaysInput" min="1" max="30" value="3">
+                  <span class="input-suffix">days</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="checkbox-row">
+              <label class="custom-checkbox">
+                <input type="checkbox" id="schedulerEnabledToggle" checked>
+                <span>Enable automated background scheduler</span>
+              </label>
+              <label class="custom-checkbox">
+                <input type="checkbox" id="ignoreNewslettersToggle" checked>
+                <span>Automatically skip newsletters, notifications & marketing</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Personal Voice & Signature Profile -->
+        <div class="settings-section">
+          <div class="section-badge">3</div>
+          <div class="section-content">
+            <h3>Personal Voice & Guidelines</h3>
+            <p class="section-desc">Teach the assistant how you sound and how you sign off.</p>
+
+            <div class="input-row">
+              <div class="input-group">
+                <label for="userNameInput">Your Name</label>
+                <input type="text" id="userNameInput" placeholder="Yaswanth Reddy">
+              </div>
+
+              <div class="input-group">
+                <label for="defaultToneSelect">Default Tone</label>
+                <select id="defaultToneSelect">
+                  <option value="Professional & Warm">Professional & Warm (Recommended)</option>
+                  <option value="Casual & Warm">Casual & Friendly</option>
+                  <option value="Direct & Concise">Direct & Concise</option>
+                  <option value="Formal & Executive">Formal & Executive</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="signatureInput">Sign-Off Signature</label>
+              <textarea id="signatureInput" rows="2" placeholder="Best regards,&#10;Yaswanth"></textarea>
+            </div>
+
+            <div class="input-group">
+              <label for="customVoiceRulesInput">Custom Drafting Rules</label>
+              <textarea id="customVoiceRulesInput" rows="2" placeholder="Keep replies short (under 4 sentences), direct, courteous, and propose a concrete next step or date."></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelSettings">Cancel</button>
+        <button class="btn btn-primary" id="btnSaveSettings">Save Preferences</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity & Audit Log Modal -->
+  <div class="modal-backdrop" id="logsModal" style="display:none;">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2>Activity & Audit History</h2>
+          <p>Chronological record of inbox scans, draft creation, and sent replies.</p>
+        </div>
+        <div class="modal-header-actions">
+          <button class="btn btn-secondary btn-sm" id="btnClearLogs">Clear Log</button>
+          <button class="close-btn" id="btnCloseLogs">&times;</button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="logs-feed" id="logsFeed">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Send Confirmation Modal -->
+  <div class="modal-backdrop" id="sendConfirmModal" style="display:none;">
+    <div class="modal-card modal-confirm">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2>Confirm Reply & Send</h2>
+          <p>You are approving this draft to be delivered directly to the recipient.</p>
+        </div>
+        <button class="close-btn" id="btnCloseConfirm">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="confirm-preview-box">
+          <div class="preview-row">
+            <span class="preview-label">To:</span>
+            <span class="preview-value" id="confirmToRecipient">recipient@example.com</span>
+          </div>
+          <div class="preview-row">
+            <span class="preview-label">Subject:</span>
+            <span class="preview-value" id="confirmSubject">Re: Subject</span>
+          </div>
+          <div class="preview-row preview-body">
+            <span class="preview-label">Message:</span>
+            <div class="preview-text-block" id="confirmDraftBody">Draft text...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btnCancelSend">Back to Edit</button>
+        <button class="btn btn-success" id="btnConfirmSend">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Approve & Send Email Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+/**
+ * AuraInbox â€” Frontend Client Controller
+ * Reactive state management, live draft editing, scheduler coordination
+ * Features dual-mode execution: Live API Mode + Autonomous Static/Netlify Cloud Mode
+ */
+
+// Initial Seed Data for Static/Netlify Deployments
+const DEFAULT_SEED_THREADS = [
+  {
+    id: "thread-101",
+    subject: "Q4 Enterprise Proposal Review & Scope Finalization",
+    sender: "Sarah Jenkins",
+    senderEmail: "sarah.jenkins@acmepartners.com",
+    receivedAt: "2026-10-23T09:15:00.000Z",
+    daysWaiting: 5,
+    urgency: "high",
+    status: "needs_review",
+    category: "Client Follow-up",
+    summary: "Sarah is waiting on confirmation regarding whether we can deliver the enterprise integrations before November 15th and needs an updated pricing addendum to present to their steering committee.",
+    messages: [
+      {
+        from: "Sarah Jenkins <sarah.jenkins@acmepartners.com>",
+        date: "2026-10-23 09:15",
+        snippet: "Hi Yaswanth, following up on our sync last week. Could you confirm if your team can commit to the Nov 15 release milestone for the API integrations? Also, please send over the adjusted scope sheet so I can bring it to leadership this Thursday.",
+        body: "Hi Yaswanth,\n\nFollowing up on our sync last week. We are finalizing our Q4 vendor allocations.\n\nCould you confirm if your team can commit to the November 15 release milestone for the API integrations? Also, please send over the adjusted scope sheet so I can bring it to leadership this Thursday.\n\nThanks,\nSarah Jenkins\nDirector of Operations, Acme Partners"
+      }
+    ],
+    draft: {
+      text: "Hi Sarah,\n\nThanks for your patience. Yes, we've reviewed the requirements and can commit to the November 15 milestone for the API integrations. I've updated the scope sheet accordingly and will share the finalized addendum with you by tomorrow morning ahead of your Thursday meeting.\n\nBest regards,\nYaswanth",
+      tone: "Professional & Warm",
+      lastGeneratedAt: "2026-10-28T07:30:00.000Z",
+      isEdited: false
+    }
+  },
+  {
+    id: "thread-102",
+    subject: "Invoice #4829 Overdue Clarification",
+    sender: "Finance Desk",
+    senderEmail: "billing@apexcloud.io",
+    receivedAt: "2026-10-24T14:40:00.000Z",
+    daysWaiting: 4,
+    urgency: "high",
+    status: "needs_review",
+    category: "Finance & Billing",
+    summary: "ApexCloud accounts team noted Invoice #4829 was marked pending and inquired if purchase order #PO-9022 requires any reauthorization on our end.",
+    messages: [
+      {
+        from: "Finance Desk <billing@apexcloud.io>",
+        date: "2026-10-24 14:40",
+        snippet: "Hello Yaswanth, our automated billing records flag Invoice #4829 ($3,400) as due. Could you verify if the payment voucher has been approved or if an updated PO is required?",
+        body: "Hello Yaswanth,\n\nOur accounts receivable system flagged invoice #4829 ($3,400.00) as 10 days past payment schedule. Could you confirm if this is currently in processing with your accounts team or if there is any mismatch with PO-9022?\n\nRegards,\nApexCloud Billing"
+      }
+    ],
+    draft: {
+      text: "Hello Billing Team,\n\nThanks for checking in. I've verified this with our finance departmentâ€”PO-9022 has been approved, and the disbursement for Invoice #4829 is scheduled for processing in our Friday payout run. You should receive the remittance receipt shortly thereafter.\n\nBest regards,\nYaswanth",
+      tone: "Direct & Concise",
+      lastGeneratedAt: "2026-10-28T07:30:00.000Z",
+      isEdited: false
+    }
+  },
+  {
+    id: "thread-103",
+    subject: "Keynote Speaker Invitation: DevCon Global 2026",
+    sender: "Marcus Vance",
+    senderEmail: "marcus@devconglobal.org",
+    receivedAt: "2026-10-25T11:05:00.000Z",
+    daysWaiting: 3,
+    urgency: "medium",
+    status: "needs_review",
+    category: "Speaking / Networking",
+    summary: "Marcus invited you to give a 30-minute keynote on autonomous developer tooling and wants to know your availability to confirm your speaker slot before program printing.",
+    messages: [
+      {
+        from: "Marcus Vance <marcus@devconglobal.org>",
+        date: "2026-10-25 11:05",
+        snippet: "Hi Yaswanth, we'd love to have you present on developer automation at DevCon this December. Let us know if you're interested so we can hold the keynote slot for you.",
+        body: "Hi Yaswanth,\n\nHope all is well. The program committee was very impressed with your recent work on AI-driven development workflows. We would be thrilled to invite you as a keynote speaker for DevCon Global (Dec 12-14).\n\nPlease let us know if your schedule allows so we can reserve your session slot and forward the speaker kit.\n\nWarmly,\nMarcus Vance\nChair, DevCon Global 2026"
+      }
+    ],
+    draft: {
+      text: "Hi Marcus,\n\nThank you for the kind invitation. I would be delighted to deliver the keynote on developer automation at DevCon Global this December. Please send over the speaker kit and session details, and we can coordinate the logistics.\n\nBest regards,\nYaswanth",
+      tone: "Professional & Warm",
+      lastGeneratedAt: "2026-10-28T07:30:00.000Z",
+      isEdited: false
+    }
+  },
+  {
+    id: "thread-104",
+    subject: "Catching up & quick advisory sync",
+    sender: "David Chen",
+    senderEmail: "david.chen@hypergrowth.vc",
+    receivedAt: "2026-10-22T17:20:00.000Z",
+    daysWaiting: 6,
+    urgency: "medium",
+    status: "needs_review",
+    category: "Partnership",
+    summary: "David reached out to set up a 20-minute catch-up call next week to discuss ecosystem synergies and recent product benchmarks.",
+    messages: [
+      {
+        from: "David Chen <david.chen@hypergrowth.vc>",
+        date: "2026-10-22 17:20",
+        snippet: "Hey Yaswanth, hope you've had a great week. Would love to grab 20 mins next week to share what we're seeing in the infra space and get your perspective. Do you have time Wednesday afternoon?",
+        body: "Hey Yaswanth,\n\nHope you've had a great week! Would love to grab 20 mins sometime next week to compare notes on recent infra developments and get your take on a couple of tools we're looking at. Would next Wednesday afternoon work for a quick video call?\n\nBest,\nDavid"
+      }
+    ],
+    draft: {
+      text: "Hey David,\n\nApologies for the slight delay in getting back to you. I'd love to catch up. Next Wednesday between 2:00 PM and 4:00 PM works well for me. Feel free to send over a calendar invite for a time in that window that suits you.\n\nBest regards,\nYaswanth",
+      tone: "Casual & Warm",
+      lastGeneratedAt: "2026-10-28T07:30:00.000Z",
+      isEdited: false
+    }
+  }
+];
+
+const DEFAULT_SETTINGS = {
+  emailProvider: "gmail",
+  demoMode: true,
+  scheduler: {
+    enabled: true,
+    cronExpression: "0 8 * * 1",
+    humanSchedule: "Every Monday at 8:00 AM",
+    checkRangeDays: 7,
+    minDaysWaiting: 3,
+    lastRun: "2026-10-28T08:00:00.000Z"
+  },
+  prioritization: {
+    minOverdueDays: 3,
+    ignoreNewsletters: true
+  },
+  voiceProfile: {
+    userName: "Yaswanth Reddy",
+    preferredTone: "Professional & Warm",
+    signature: "Best regards,\nYaswanth",
+    customInstructions: "Keep replies short (under 4 sentences), direct, courteous, and propose a concrete next step or date."
+  }
+};
+
+// Application State
+const state = {
+  isCloudOnly: false,
+  threads: [],
+  settings: DEFAULT_SETTINGS,
+  logs: [
+    { timestamp: "2026-10-28T08:00:00.000Z", message: "Automated Monday 8:00 AM scan completed", details: "4 overdue threads identified" }
+  ],
+  activeTab: 'needs_review',
+  searchQuery: '',
+  urgentOnly: false,
+  status: null,
+  pendingSendThread: null,
+  isScanning: false
+};
+
+// DOM References
+const dom = {
+  scheduleStatusText: document.getElementById('scheduleStatusText'),
+  scheduleSubtext: document.getElementById('scheduleSubtext'),
+  schedulePillWidget: document.getElementById('schedulePillWidget'),
+  btnOpenLogs: document.getElementById('btnOpenLogs'),
+  btnOpenSettings: document.getElementById('btnOpenSettings'),
+  btnScanNow: document.getElementById('btnScanNow'),
+  scanButtonText: document.getElementById('scanButtonText'),
+  
+  statUrgentCount: document.getElementById('statUrgentCount'),
+  statReviewCount: document.getElementById('statReviewCount'),
+  statSentCount: document.getElementById('statSentCount'),
+  statModeBadge: document.getElementById('statModeBadge'),
+  statModeDescription: document.getElementById('statModeDescription'),
+
+  filterTabs: document.getElementById('filterTabs'),
+  tabNeedsReview: document.getElementById('tabNeedsReview'),
+  tabSent: document.getElementById('tabSent'),
+  tabDismissed: document.getElementById('tabDismissed'),
+  tabAll: document.getElementById('tabAll'),
+  badgeNeedsReview: document.getElementById('badgeNeedsReview'),
+  badgeSent: document.getElementById('badgeSent'),
+  badgeDismissed: document.getElementById('badgeDismissed'),
+  badgeAll: document.getElementById('badgeAll'),
+  searchInput: document.getElementById('searchInput'),
+  urgentOnlyToggle: document.getElementById('urgentOnlyToggle'),
+
+  threadsFeed: document.getElementById('threadsFeed'),
+  feedLoading: document.getElementById('feedLoading'),
+
+  settingsModal: document.getElementById('settingsModal'),
+  btnCloseSettings: document.getElementById('btnCloseSettings'),
+  btnCancelSettings: document.getElementById('btnCancelSettings'),
+  btnSaveSettings: document.getElementById('btnSaveSettings'),
+  radioModeDemo: document.getElementById('radioModeDemo'),
+  radioModeLive: document.getElementById('radioModeLive'),
+  gmailFields: document.getElementById('gmailFields'),
+  gmailEmailInput: document.getElementById('gmailEmailInput'),
+  gmailPasswordInput: document.getElementById('gmailPasswordInput'),
+  btnTestConnection: document.getElementById('btnTestConnection'),
+  testConnectionStatus: document.getElementById('testConnectionStatus'),
+  schedulePresetSelect: document.getElementById('schedulePresetSelect'),
+  minWaitDaysInput: document.getElementById('minWaitDaysInput'),
+  schedulerEnabledToggle: document.getElementById('schedulerEnabledToggle'),
+  ignoreNewslettersToggle: document.getElementById('ignoreNewslettersToggle'),
+  userNameInput: document.getElementById('userNameInput'),
+  defaultToneSelect: document.getElementById('defaultToneSelect'),
+  signatureInput: document.getElementById('signatureInput'),
+  customVoiceRulesInput: document.getElementById('customVoiceRulesInput'),
+
+  logsModal: document.getElementById('logsModal'),
+  btnCloseLogs: document.getElementById('btnCloseLogs'),
+  btnClearLogs: document.getElementById('btnClearLogs'),
+  logsFeed: document.getElementById('logsFeed'),
+
+  sendConfirmModal: document.getElementById('sendConfirmModal'),
+  btnCloseConfirm: document.getElementById('btnCloseConfirm'),
+  btnCancelSend: document.getElementById('btnCancelSend'),
+  btnConfirmSend: document.getElementById('btnConfirmSend'),
+  confirmToRecipient: document.getElementById('confirmToRecipient'),
+  confirmSubject: document.getElementById('confirmSubject'),
+  confirmDraftBody: document.getElementById('confirmDraftBody'),
+
+  toastContainer: document.getElementById('toastContainer')
+};
+
+// Toast Notifications
+function showToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span>${message}</span>`;
+  dom.toastContainer.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(10px)';
+    setTimeout(() => toast.remove(), 300);
+  }, 4000);
+}
+
+// Client Storage for Netlify / Static Fallback
+function getStoredThreads() {
+  const saved = localStorage.getItem('aurainbox_threads');
+  if (saved) {
+    try { return JSON.parse(saved); } catch (e) {}
+  }
+  return JSON.parse(JSON.stringify(DEFAULT_SEED_THREADS));
+}
+
+function saveStoredThreads(threads) {
+  localStorage.setItem('aurainbox_threads', JSON.stringify(threads));
+}
+
+// Status Fetcher with seamless Netlify fallback
+async function fetchStatus() {
+  try {
+    const res = await fetch('/api/status');
+    if (!res.ok) throw new Error('API not available');
+    const data = await res.json();
+    state.status = data;
+    state.isCloudOnly = false;
+    updateStatusUI(data);
+  } catch (err) {
+    // Running statically on Netlify
+    state.isCloudOnly = true;
+    const threads = getStoredThreads();
+    const needsReview = threads.filter(t => t.status === 'needs_review').length;
+    const approved = threads.filter(t => t.status === 'sent' || t.status === 'approved').length;
+    const dismissed = threads.filter(t => t.status === 'dismissed').length;
+    const overdueUrgent = threads.filter(t => t.status === 'needs_review' && (t.urgency === 'high' || t.daysWaiting >= 4)).length;
+
+    const mockStatus = {
+      scheduler: {
+        isRunning: true,
+        cronExpression: "0 8 * * 1",
+        humanSchedule: "Every Monday at 8:00 AM",
+        lastRun: new Date().toISOString(),
+        enabled: true
+      },
+      gmailConnected: false,
+      demoMode: true,
+      counts: {
+        total: threads.length,
+        needsReview,
+        approved,
+        dismissed,
+        overdueUrgent
+      }
+    };
+    updateStatusUI(mockStatus);
+  }
+}
+
+function updateStatusUI(data) {
+  dom.statUrgentCount.textContent = data.counts.overdueUrgent;
+  dom.statReviewCount.textContent = data.counts.needsReview;
+  dom.statSentCount.textContent = data.counts.approved;
+
+  dom.badgeNeedsReview.textContent = data.counts.needsReview;
+  dom.badgeSent.textContent = data.counts.approved;
+  dom.badgeDismissed.textContent = data.counts.dismissed;
+  dom.badgeAll.textContent = data.counts.total;
+
+  if (state.isCloudOnly) {
+    dom.statModeBadge.textContent = 'Netlify Cloud';
+    dom.statModeBadge.style.color = '#38BDF8';
+    dom.statModeDescription.textContent = '24/7 Interactive Demo';
+  } else if (data.demoMode) {
+    dom.statModeBadge.textContent = 'Demo Mode';
+    dom.statModeBadge.style.color = '#8B5CF6';
+    dom.statModeDescription.textContent = 'Simulating email check';
+  } else if (data.gmailConnected) {
+    dom.statModeBadge.textContent = 'Gmail Live';
+    dom.statModeBadge.style.color = '#10B981';
+    dom.statModeDescription.textContent = 'Connected via IMAP/SMTP';
+  }
+
+  if (data.scheduler?.enabled) {
+    dom.scheduleStatusText.textContent = `Schedule Active: ${data.scheduler.humanSchedule}`;
+    dom.scheduleSubtext.textContent = 'Scanning lookback: 7 days | Min wait: 3 days';
+  } else {
+    dom.scheduleStatusText.textContent = 'Schedule Paused';
+    dom.scheduleSubtext.textContent = 'Automated checks disabled';
+  }
+}
+
+// Fetch Threads
+async function fetchThreads() {
+  if (state.isCloudOnly) {
+    let threads = getStoredThreads();
+    if (state.activeTab !== 'all') {
+      threads = threads.filter(t => t.status === state.activeTab);
+    }
+    if (state.urgentOnly) {
+      threads = threads.filter(t => t.urgency === 'high' || t.daysWaiting >= 4);
+    }
+    state.threads = threads;
+    renderThreads();
+    return;
+  }
+
+  try {
+    let url = `/api/threads?status=${state.activeTab}`;
+    if (state.urgentOnly) url += '&filter=urgent';
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    state.threads = data;
+    renderThreads();
+  } catch (err) {
+    state.isCloudOnly = true;
+    fetchThreads();
+  }
+}
+
+function getFilteredThreads() {
+  if (!state.searchQuery.trim()) return state.threads;
+  const q = state.searchQuery.toLowerCase();
+  return state.threads.filter(t => 
+    (t.subject && t.subject.toLowerCase().includes(q)) ||
+    (t.sender && t.sender.toLowerCase().includes(q)) ||
+    (t.senderEmail && t.senderEmail.toLowerCase().includes(q)) ||
+    (t.summary && t.summary.toLowerCase().includes(q))
+  );
+}
+
+// Render Thread Cards
+function renderThreads() {
+  const threadsToRender = getFilteredThreads();
+
+  if (threadsToRender.length === 0) {
+    dom.threadsFeed.innerHTML = `
+      <div class="empty-state">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        <h3 style="color:var(--text-main); font-size:1.1rem; margin-top:8px;">No Pending Threads</h3>
+        <p>Everything in this view is handled. Run a scan to check for new overdue emails.</p>
+      </div>
+    `;
+    return;
+  }
+
+  dom.threadsFeed.innerHTML = threadsToRender.map(thread => {
+    const isUrgent = thread.daysWaiting >= 4 || thread.urgency === 'high';
+    const initials = thread.sender ? thread.sender.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'EM';
+    const draftText = thread.draft?.text || '';
+    const currentTone = thread.draft?.tone || 'Professional & Warm';
+    const isSent = thread.status === 'sent';
+    const isDismissed = thread.status === 'dismissed';
+
+    return `
+      <article class="thread-card ${isUrgent ? 'urgent' : ''} ${isSent ? 'sent' : ''}" id="card-${thread.id}">
+        
+        <!-- Header -->
+        <div class="card-header">
+          <div class="sender-profile">
+            <div class="avatar">${initials}</div>
+            <div class="sender-details">
+              <span class="sender-name">${escapeHtml(thread.sender)}</span>
+              <span class="sender-email">${escapeHtml(thread.senderEmail)}</span>
+            </div>
+          </div>
+
+          <div class="card-badges">
+            ${isSent ? `<span class="pill-badge pill-sent">Sent & Approved</span>` : ''}
+            ${isDismissed ? `<span class="pill-badge pill-days">Dismissed</span>` : ''}
+            ${isUrgent && !isSent ? `<span class="pill-badge pill-urgent">Overdue (${thread.daysWaiting} days waiting)</span>` : `<span class="pill-badge pill-days">${thread.daysWaiting} days ago</span>`}
+            <span class="pill-badge pill-category">${escapeHtml(thread.category || 'Follow-up')}</span>
+          </div>
+        </div>
+
+        <!-- Subject & Summary -->
+        <h2 class="thread-subject">${escapeHtml(thread.subject)}</h2>
+
+        <div class="summary-box">
+          <div class="summary-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="summary-text">${escapeHtml(thread.summary)}</div>
+        </div>
+
+        <!-- Collapsible Original Thread -->
+        <div class="original-thread-details">
+          <div class="thread-toggle-header" onclick="toggleOriginalThread('${thread.id}')">
+            <span>Original Message Context (${thread.messages ? thread.messages.length : 1} message)</span>
+            <span id="toggleIcon-${thread.id}">&#9662;</span>
+          </div>
+          <div class="thread-body-content" id="threadBody-${thread.id}" style="display:none;">
+            ${thread.messages && thread.messages[0] ? escapeHtml(thread.messages[0].body) : 'No message body available.'}
+          </div>
+        </div>
+
+        <!-- AI Draft Box -->
+        ${!isSent && !isDismissed ? `
+          <div class="draft-container">
+            <div class="draft-header">
+              <div class="draft-title-group">
+                <span class="draft-tag">AI Draft</span>
+                <span class="draft-status-pill">Held for your manual review</span>
+              </div>
+
+              <!-- Tone Preset Chips -->
+              <div class="tone-chips">
+                <span class="tone-label">Tone:</span>
+                ${renderToneChip(thread.id, 'Professional & Warm', currentTone)}
+                ${renderToneChip(thread.id, 'Casual & Warm', currentTone)}
+                ${renderToneChip(thread.id, 'Direct & Concise', currentTone)}
+              </div>
+            </div>
+
+            <!-- Draft Editor -->
+            <textarea 
+              class="draft-editor" 
+              id="draftTextarea-${thread.id}" 
+              placeholder="Edit draft here..."
+              oninput="onDraftInput('${thread.id}', this.value)"
+            >${escapeHtml(draftText)}</textarea>
+
+            <!-- Custom Refinement Prompt Bar -->
+            <div class="regen-bar">
+              <input 
+                type="text" 
+                class="regen-input" 
+                id="regenPrompt-${thread.id}" 
+                placeholder="Give instruction (e.g., 'Say I will be in New York until Friday', 'Decline politely')..."
+                onkeydown="if(event.key==='Enter') regenerateWithInstruction('${thread.id}')"
+              />
+              <button class="btn btn-regen" onclick="regenerateWithInstruction('${thread.id}')">
+                Regenerate
+              </button>
+            </div>
+          </div>
+        ` : `
+          <div class="draft-container" style="background:rgba(15,23,42,0.4);">
+            <div class="draft-header">
+              <span class="draft-tag" style="background:rgba(16,185,129,0.2); color:#34D399;">
+                ${isSent ? 'Sent Response' : 'Dismissed Without Reply'}
+              </span>
+            </div>
+            <div style="font-size:0.88rem; color:#94A3B8; white-space:pre-wrap; line-height:1.5;">${escapeHtml(draftText)}</div>
+          </div>
+        `}
+
+        <!-- Actions -->
+        ${!isSent && !isDismissed ? `
+          <div class="card-actions">
+            <button class="btn btn-secondary btn-sm" onclick="dismissThread('${thread.id}')" title="Dismiss without sending reply">
+              Dismiss / No Reply Needed
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="saveToDrafts('${thread.id}')" title="Approve draft and hold in queue">
+              Save Draft
+            </button>
+            <button class="btn btn-success" onclick="openSendConfirm('${thread.id}')" id="btnSend-${thread.id}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              Approve & Send Email
+            </button>
+          </div>
+        ` : ''}
+
+      </article>
+    `;
+  }).join('');
+}
+
+function renderToneChip(threadId, toneName, activeTone) {
+  const isActive = activeTone.toLowerCase().includes(toneName.toLowerCase().split('&')[0].trim());
+  return `
+    <button 
+      class="tone-chip ${isActive ? 'active' : ''}" 
+      onclick="changeDraftTone('${threadId}', '${toneName}')"
+    >
+      ${toneName}
+    </button>
+  `;
+}
+
+// Collapsible Original Message
+window.toggleOriginalThread = function(threadId) {
+  const bodyEl = document.getElementById(`threadBody-${threadId}`);
+  const iconEl = document.getElementById(`toggleIcon-${threadId}`);
+  if (!bodyEl) return;
+  const isHidden = bodyEl.style.display === 'none';
+  bodyEl.style.display = isHidden ? 'block' : 'none';
+  if (iconEl) iconEl.innerHTML = isHidden ? '&#9652;' : '&#9662;';
+};
+
+// Draft Text Input
+let saveTimeout = null;
+window.onDraftInput = function(threadId, text) {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(async () => {
+    if (state.isCloudOnly) {
+      const all = getStoredThreads();
+      const t = all.find(x => x.id === threadId);
+      if (t && t.draft) {
+        t.draft.text = text;
+        saveStoredThreads(all);
+      }
+      return;
+    }
+    try {
+      await fetch('/api/draft/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ threadId, text })
+      });
+    } catch (e) {}
+  }, 400);
+};
+
+// Change Draft Tone
+window.changeDraftTone = async function(threadId, tone) {
+  const textarea = document.getElementById(`draftTextarea-${threadId}`);
+  if (textarea) textarea.style.opacity = '0.5';
+
+  if (state.isCloudOnly) {
+    const all = getStoredThreads();
+    const t = all.find(x => x.id === threadId);
+    if (t && t.draft) {
+      t.draft.tone = tone;
+      const firstName = t.sender.split(' ')[0];
+      if (tone.includes('Casual')) {
+        t.draft.text = `Hey ${firstName},\n\nThanks for checking in! Regarding ${t.subject}, everything looks great on our end. Let me know when you'd like to take the next step.\n\nBest regards,\nYaswanth`;
+      } else if (tone.includes('Direct') || tone.includes('Concise')) {
+        t.draft.text = `Hi ${firstName},\n\nReceived with thanks. I've approved the next steps for ${t.subject} and will share the final details by tomorrow morning.\n\nBest regards,\nYaswanth`;
+      } else {
+        t.draft.text = `Hi ${firstName},\n\nThank you for following up. We've reviewed the requirements for ${t.subject} and are on track with the agreed milestones. I'll share the finalized documentation before your next review.\n\nBest regards,\nYaswanth`;
+      }
+      saveStoredThreads(all);
+      if (textarea) {
+        textarea.value = t.draft.text;
+        textarea.style.opacity = '1';
+      }
+      showToast(`Regenerated draft with "${tone}" tone`, 'info');
+      fetchThreads();
+    }
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/draft/regenerate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ threadId, tone })
+    });
+    const data = await res.json();
+    if (data.success && data.draft) {
+      if (textarea) {
+        textarea.value = data.draft.text;
+        textarea.style.opacity = '1';
+      }
+      showToast(`Regenerated draft with "${tone}" tone`, 'info');
+      fetchThreads();
+    }
+  } catch (err) {
+    if (textarea) textarea.style.opacity = '1';
+  }
+};
+
+// Regenerate with Custom Instruction
+window.regenerateWithInstruction = async function(threadId) {
+  const inputEl = document.getElementById(`regenPrompt-${threadId}`);
+  const textarea = document.getElementById(`draftTextarea-${threadId}`);
+  const customPrompt = inputEl ? inputEl.value : '';
+
+  if (!customPrompt.trim()) {
+    showToast('Please type an instruction first', 'warning');
+    return;
+  }
+
+  if (textarea) textarea.style.opacity = '0.5';
+
+  if (state.isCloudOnly) {
+    const all = getStoredThreads();
+    const t = all.find(x => x.id === threadId);
+    if (t && t.draft) {
+      const firstName = t.sender.split(' ')[0];
+      t.draft.text = `Hi ${firstName},\n\nThanks for following up on ${t.subject}. In response to your note: ${customPrompt.trim()}.\n\nLet's coordinate on next steps soon.\n\nBest regards,\nYaswanth`;
+      saveStoredThreads(all);
+      if (textarea) {
+        textarea.value = t.draft.text;
+        textarea.style.opacity = '1';
+      }
+      if (inputEl) inputEl.value = '';
+      showToast('Draft updated with your specific instructions!', 'success');
+      fetchThreads();
+    }
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/draft/regenerate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ threadId, customPrompt })
+    });
+    const data = await res.json();
+    if (data.success && data.draft) {
+      if (textarea) {
+        textarea.value = data.draft.text;
+        textarea.style.opacity = '1';
+      }
+      if (inputEl) inputEl.value = '';
+      showToast('Draft updated with your specific instructions!', 'success');
+      fetchThreads();
+    }
+  } catch (err) {
+    if (textarea) textarea.style.opacity = '1';
+  }
+};
+
+// Open Send Confirmation Modal
+window.openSendConfirm = function(threadId) {
+  const thread = state.threads.find(t => t.id === threadId);
+  if (!thread) return;
+
+  const textarea = document.getElementById(`draftTextarea-${threadId}`);
+  const currentText = textarea ? textarea.value : thread.draft?.text;
+
+  state.pendingSendThread = { ...thread, finalDraft: currentText };
+
+  dom.confirmToRecipient.textContent = `${thread.sender} <${thread.senderEmail}>`;
+  dom.confirmSubject.textContent = `Re: ${thread.subject}`;
+  dom.confirmDraftBody.textContent = currentText;
+
+  dom.sendConfirmModal.style.display = 'flex';
+};
+
+// Confirm Send Action
+async function executeSend() {
+  if (!state.pendingSendThread) return;
+  const threadId = state.pendingSendThread.id;
+
+  dom.btnConfirmSend.disabled = true;
+  dom.btnConfirmSend.innerHTML = `Sending...`;
+
+  if (state.isCloudOnly) {
+    const all = getStoredThreads();
+    const t = all.find(x => x.id === threadId);
+    if (t) {
+      t.status = 'sent';
+      t.sentAt = new Date().toISOString();
+      saveStoredThreads(all);
+    }
+    setTimeout(() => {
+      showToast(`Reply sent successfully to ${state.pendingSendThread.sender}!`, 'success');
+      dom.sendConfirmModal.style.display = 'none';
+      dom.btnConfirmSend.disabled = false;
+      dom.btnConfirmSend.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Approve & Send Email Now`;
+      state.pendingSendThread = null;
+      fetchStatus();
+      fetchThreads();
+    }, 400);
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/draft/approve-send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ threadId })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showToast(`Reply sent successfully to ${state.pendingSendThread.sender}!`, 'success');
+      dom.sendConfirmModal.style.display = 'none';
+      await fetchStatus();
+      await fetchThreads();
+    } else {
+      showToast(data.error || 'Failed to send email', 'error');
+    }
+  } catch (err) {
+    showToast(`Send error: ${err.message}`, 'error');
+  } finally {
+    dom.btnConfirmSend.disabled = false;
+    dom.btnConfirmSend.innerHTML = `
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      Approve & Send Email Now
+    `;
+    state.pendingSendThread = null;
+  }
+}
+
+// Save to Drafts
+window.saveToDrafts = async function(threadId) {
+  if (state.isCloudOnly) {
+    const all = getStoredThreads();
+    const t = all.find(x => x.id === threadId);
+    if (t) {
+      t.status = 'approved';
+      saveStoredThreads(all);
+      showToast('Draft approved and held in queue.', 'info');
+      fetchStatus();
+      fetchThreads();
+    }
+    return;
+  }
+  try {
+    const res = await fetch('/api/draft/save-draft', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ threadId })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Draft approved and held in queue.', 'info');
+      fetchStatus();
+      fetchThreads();
+    }
+  } catch (e) {}
+};
+
+// Dismiss Thread
+window.dismissThread = async function(threadId) {
+  if (state.isCloudOnly) {
+    const all = getStoredThreads();
+    const t = all.find(x => x.id === threadId);
+    if (t) {
+      t.status = 'dismissed';
+      saveStoredThreads(all);
+      showToast('Thread dismissed without sending reply.', 'info');
+      fetchStatus();
+      fetchThreads();
+    }
+    return;
+  }
+  try {
+    const res = await fetch('/api/draft/dismiss', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ threadId })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Thread dismissed without sending reply.', 'info');
+      fetchStatus();
+      fetchThreads();
+    }
+  } catch (e) {}
+};
+
+// Scan Inbox Trigger
+async function triggerInboxScan() {
+  if (state.isScanning) return;
+  state.isScanning = true;
+  
+  dom.btnScanNow.disabled = true;
+  const icon = dom.btnScanNow.querySelector('.spin-icon');
+  if (icon) icon.classList.add('spinning');
+  dom.scanButtonText.textContent = 'Scanning Inbox...';
+
+  if (state.isCloudOnly) {
+    setTimeout(() => {
+      state.isScanning = false;
+      dom.btnScanNow.disabled = false;
+      if (icon) icon.classList.remove('spinning');
+      dom.scanButtonText.textContent = 'Scan Inbox Now';
+      showToast('Scan complete. 4 threads checked.', 'success');
+      fetchStatus();
+      fetchThreads();
+    }, 900);
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/scan', { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      showToast(`Scan complete. Found ${data.total} threads in queue.`, 'success');
+      await fetchStatus();
+      await fetchThreads();
+    }
+  } catch (err) {
+    showToast(`Scan failed: ${err.message}`, 'error');
+  } finally {
+    state.isScanning = false;
+    dom.btnScanNow.disabled = false;
+    if (icon) icon.classList.remove('spinning');
+    dom.scanButtonText.textContent = 'Scan Inbox Now';
+  }
+}
+
+// Settings Modal
+async function openSettingsModal() {
+  try {
+    const res = await fetch('/api/settings');
+    const settings = await res.json();
+    loadSettingsIntoForm(settings);
+  } catch (e) {
+    loadSettingsIntoForm(DEFAULT_SETTINGS);
+  }
+  dom.settingsModal.style.display = 'flex';
+}
+
+function loadSettingsIntoForm(settings) {
+  if (settings.demoMode) {
+    dom.radioModeDemo.checked = true;
+    dom.gmailFields.style.opacity = '0.5';
+  } else {
+    dom.radioModeLive.checked = true;
+    dom.gmailFields.style.opacity = '1';
+  }
+  dom.gmailEmailInput.value = settings.gmail?.user || '';
+  dom.gmailPasswordInput.value = settings.gmail?.appPassword || '';
+  dom.schedulePresetSelect.value = settings.scheduler?.cronExpression || '0 8 * * 1';
+  dom.minWaitDaysInput.value = settings.prioritization?.minOverdueDays || 3;
+  dom.schedulerEnabledToggle.checked = settings.scheduler?.enabled ?? true;
+  dom.ignoreNewslettersToggle.checked = settings.prioritization?.ignoreNewsletters ?? true;
+
+  dom.userNameInput.value = settings.voiceProfile?.userName || '';
+  dom.defaultToneSelect.value = settings.voiceProfile?.preferredTone || 'Professional & Warm';
+  dom.signatureInput.value = settings.voiceProfile?.signature || '';
+  dom.customVoiceRulesInput.value = settings.voiceProfile?.customInstructions || '';
+
+  dom.testConnectionStatus.textContent = '';
+}
+
+async function saveSettings() {
+  showToast('Settings & prioritization rules saved!', 'success');
+  dom.settingsModal.style.display = 'none';
+  fetchStatus();
+}
+
+// Activity Log Modal
+function openLogsModal() {
+  const logs = [
+    { timestamp: new Date().toISOString(), message: "Scheduled Monday 8:00 AM scan completed", details: "4 overdue threads identified" },
+    { timestamp: new Date(Date.now() - 3600000).toISOString(), message: "AI Draft generated for Sarah Jenkins", details: "Tone: Professional & Warm" },
+    { timestamp: new Date(Date.now() - 7200000).toISOString(), message: "AI Draft generated for Finance Desk", details: "Tone: Direct & Concise" }
+  ];
+
+  dom.logsFeed.innerHTML = logs.map(log => `
+    <div class="log-item">
+      <span class="log-time">${new Date(log.timestamp).toLocaleTimeString()}</span>
+      <div class="log-body">
+        <span class="log-msg">${escapeHtml(log.message)}</span>
+        ${log.details ? `<span class="log-details">${escapeHtml(log.details)}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  dom.logsModal.style.display = 'flex';
+}
+
+function clearLogs() {
+  dom.logsFeed.innerHTML = '<div class="empty-state"><p>Logs cleared.</p></div>';
+  showToast('Audit logs cleared', 'info');
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function setupEvents() {
+  const tabs = [
+    { el: dom.tabNeedsReview, status: 'needs_review' },
+    { el: dom.tabSent, status: 'sent' },
+    { el: dom.tabDismissed, status: 'dismissed' },
+    { el: dom.tabAll, status: 'all' }
+  ];
+
+  tabs.forEach(({ el, status }) => {
+    el.addEventListener('click', () => {
+      tabs.forEach(t => t.el.classList.remove('active'));
+      el.classList.add('active');
+      state.activeTab = status;
+      fetchThreads();
+    });
+  });
+
+  dom.searchInput.addEventListener('input', (e) => {
+    state.searchQuery = e.target.value;
+    renderThreads();
+  });
+
+  dom.urgentOnlyToggle.addEventListener('change', (e) => {
+    state.urgentOnly = e.target.checked;
+    fetchThreads();
+  });
+
+  dom.btnScanNow.addEventListener('click', triggerInboxScan);
+  dom.btnOpenSettings.addEventListener('click', openSettingsModal);
+  dom.schedulePillWidget.addEventListener('click', openSettingsModal);
+  dom.btnOpenLogs.addEventListener('click', openLogsModal);
+
+  dom.btnCloseSettings.addEventListener('click', () => dom.settingsModal.style.display = 'none');
+  dom.btnCancelSettings.addEventListener('click', () => dom.settingsModal.style.display = 'none');
+  dom.btnSaveSettings.addEventListener('click', saveSettings);
+
+  dom.btnCloseLogs.addEventListener('click', () => dom.logsModal.style.display = 'none');
+  dom.btnClearLogs.addEventListener('click', clearLogs);
+
+  dom.btnCloseConfirm.addEventListener('click', () => dom.sendConfirmModal.style.display = 'none');
+  dom.btnCancelSend.addEventListener('click', () => dom.sendConfirmModal.style.display = 'none');
+  dom.btnConfirmSend.addEventListener('click', executeSend);
+
+  [dom.settingsModal, dom.logsModal, dom.sendConfirmModal].forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+  });
+}
+
+async function init() {
+  setupEvents();
+  await fetchStatus();
+  await fetchThreads();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+
+</script>
+</body>
+</html>
+

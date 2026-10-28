@@ -1,0 +1,46 @@
+{
+  "emailProvider": "gmail",
+  "gmail": {
+    "user": "",
+    "appPassword": "",
+    "host": "imap.gmail.com",
+    "port": 993,
+    "smtpHost": "smtp.gmail.com",
+    "smtpPort": 465,
+    "isConnected": false
+  },
+  "demoMode": true,
+  "scheduler": {
+    "enabled": true,
+    "cronExpression": "0 8 * * 1",
+    "humanSchedule": "Every Monday at 8:00 AM",
+    "checkRangeDays": 7,
+    "minDaysWaiting": 3,
+    "lastRun": "2026-10-28T07:58:14.615Z",
+    "nextRun": "2026-11-04T07:58:14.615Z"
+  },
+  "prioritization": {
+    "minOverdueDays": 3,
+    "ignoreNewsletters": true,
+    "ignoreKeywords": [
+      "unsubscribe",
+      "newsletter",
+      "noreply",
+      "notifications@github.com",
+      "jira@",
+      "marketing"
+    ],
+    "vipContacts": [
+      "sarah.connor@clientcorp.io",
+      "director@ventures.com",
+      "billing@finances.org"
+    ],
+    "autoSend": false
+  },
+  "voiceProfile": {
+    "userName": "Yaswanth Reddy",
+    "preferredTone": "Professional & Warm",
+    "signature": "Best regards,\nYaswanth",
+    "customInstructions": "Keep replies short (under 4 sentences), direct, courteous, and propose a concrete next step or date."
+  }
+}

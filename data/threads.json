@@ -1,0 +1,107 @@
+[
+    {
+        "id":  "thread-101",
+        "subject":  "Q4 Enterprise Proposal Review \u0026 Scope Finalization",
+        "sender":  "Sarah Jenkins",
+        "senderEmail":  "sarah.jenkins@acmepartners.com",
+        "receivedAt":  "2026-10-23T09:15:00.000Z",
+        "daysWaiting":  5,
+        "urgency":  "high",
+        "status":  "needs_review",
+        "category":  "Client Follow-up",
+        "summary":  "Sarah is waiting on confirmation regarding whether we can deliver the enterprise integrations before November 15th and needs an updated pricing addendum to present to their steering committee.",
+        "messages":  [
+                         {
+                             "from":  "Sarah Jenkins \u003csarah.jenkins@acmepartners.com\u003e",
+                             "date":  "2026-10-23 09:15",
+                             "snippet":  "Hi Yaswanth, following up on our sync last week. Could you confirm if your team can commit to the Nov 15 release milestone for the API integrations? Also, please send over the adjusted scope sheet so I can bring it to leadership this Thursday.",
+                             "body":  "Hi Yaswanth,\n\nFollowing up on our sync last week. We are finalizing our Q4 vendor allocations.\n\nCould you confirm if your team can commit to the November 15 release milestone for the API integrations? Also, please send over the adjusted scope sheet so I can bring it to leadership this Thursday.\n\nThanks,\nSarah Jenkins\nDirector of Operations, Acme Partners"
+                         }
+                     ],
+        "draft":  {
+                      "text":  "Hi Sarah,\n\nThanks for your patience. Yes, we\u0027ve reviewed the requirements and can commit to the November 15 milestone for the API integrations. I\u0027ve updated the scope sheet accordingly and will share the finalized addendum with you by tomorrow morning ahead of your Thursday meeting.\n\nBest regards,\nYaswanth",
+                      "tone":  "Professional \u0026 Warm",
+                      "lastGeneratedAt":  "2026-10-28T07:59:14.170Z",
+                      "isEdited":  false
+                  },
+        "sentAt":  "2026-10-28T07:59:38.494Z"
+    },
+    {
+        "id":  "thread-102",
+        "subject":  "Invoice #4829 Overdue Clarification",
+        "sender":  "Finance Desk",
+        "senderEmail":  "billing@apexcloud.io",
+        "receivedAt":  "2026-10-24T14:40:00.000Z",
+        "daysWaiting":  4,
+        "urgency":  "high",
+        "status":  "needs_review",
+        "category":  "Finance \u0026 Billing",
+        "summary":  "ApexCloud accounts team noted Invoice #4829 was marked pending and inquired if purchase order #PO-9022 requires any reauthorization on our end.",
+        "messages":  [
+                         {
+                             "from":  "Finance Desk \u003cbilling@apexcloud.io\u003e",
+                             "date":  "2026-10-24 14:40",
+                             "snippet":  "Hello Yaswanth, our automated billing records flag Invoice #4829 ($3,400) as due. Could you verify if the payment voucher has been approved or if an updated PO is required?",
+                             "body":  "Hello Yaswanth,\n\nOur accounts receivable system flagged invoice #4829 ($3,400.00) as 10 days past payment schedule. Could you confirm if this is currently in processing with your accounts team or if there is any mismatch with PO-9022?\n\nRegards,\nApexCloud Billing"
+                         }
+                     ],
+        "draft":  {
+                      "text":  "Hello Billing Team,\n\nThanks for checking in. I\u0027ve verified this with our finance department—PO-9022 has been approved, and the disbursement for Invoice #4829 is scheduled for processing in our Friday payout run. You should receive the remittance receipt shortly thereafter.\n\nBest regards,\nYaswanth",
+                      "tone":  "Direct \u0026 Concise",
+                      "lastGeneratedAt":  "2026-10-28T07:30:00.000Z",
+                      "isEdited":  false
+                  }
+    },
+    {
+        "id":  "thread-103",
+        "subject":  "Keynote Speaker Invitation: DevCon Global 2026",
+        "sender":  "Marcus Vance",
+        "senderEmail":  "marcus@devconglobal.org",
+        "receivedAt":  "2026-10-25T11:05:00.000Z",
+        "daysWaiting":  3,
+        "urgency":  "medium",
+        "status":  "needs_review",
+        "category":  "Speaking / Networking",
+        "summary":  "Marcus invited you to give a 30-minute keynote on autonomous developer tooling and wants to know your availability to confirm your speaker slot before program printing.",
+        "messages":  [
+                         {
+                             "from":  "Marcus Vance \u003cmarcus@devconglobal.org\u003e",
+                             "date":  "2026-10-25 11:05",
+                             "snippet":  "Hi Yaswanth, we\u0027d love to have you present on developer automation at DevCon this December. Let us know if you\u0027re interested so we can hold the keynote slot for you.",
+                             "body":  "Hi Yaswanth,\n\nHope all is well. The program committee was very impressed with your recent work on AI-driven development workflows. We would be thrilled to invite you as a keynote speaker for DevCon Global (Dec 12-14).\n\nPlease let us know if your schedule allows so we can reserve your session slot and forward the speaker kit.\n\nWarmly,\nMarcus Vance\nChair, DevCon Global 2026"
+                         }
+                     ],
+        "draft":  {
+                      "text":  "Hi Marcus,\n\nThank you for the kind invitation. I would be delighted to deliver the keynote on developer automation at DevCon Global this December. Please send over the speaker kit and session details, and we can coordinate the logistics.\n\nBest regards,\nYaswanth",
+                      "tone":  "Professional \u0026 Warm",
+                      "lastGeneratedAt":  "2026-10-28T07:30:00.000Z",
+                      "isEdited":  false
+                  }
+    },
+    {
+        "id":  "thread-104",
+        "subject":  "Catching up \u0026 quick advisory sync",
+        "sender":  "David Chen",
+        "senderEmail":  "david.chen@hypergrowth.vc",
+        "receivedAt":  "2026-10-22T17:20:00.000Z",
+        "daysWaiting":  6,
+        "urgency":  "medium",
+        "status":  "needs_review",
+        "category":  "Partnership",
+        "summary":  "David reached out to set up a 20-minute catch-up call next week to discuss ecosystem synergies and recent product benchmarks.",
+        "messages":  [
+                         {
+                             "from":  "David Chen \u003cdavid.chen@hypergrowth.vc\u003e",
+                             "date":  "2026-10-22 17:20",
+                             "snippet":  "Hey Yaswanth, hope you\u0027ve had a great week. Would love to grab 20 mins next week to share what we\u0027re seeing in the infra space and get your perspective. Do you have time Wednesday afternoon?",
+                             "body":  "Hey Yaswanth,\n\nHope you\u0027ve had a great week! Would love to grab 20 mins sometime next week to compare notes on recent infra developments and get your take on a couple of tools we\u0027re looking at. Would next Wednesday afternoon work for a quick video call?\n\nBest,\nDavid"
+                         }
+                     ],
+        "draft":  {
+                      "text":  "Hey David,\n\nApologies for the slight delay in getting back to you. I\u0027d love to catch up. Next Wednesday between 2:00 PM and 4:00 PM works well for me. Feel free to send over a calendar invite for a time in that window that suits you.\n\nBest regards,\nYaswanth",
+                      "tone":  "Casual \u0026 Warm",
+                      "lastGeneratedAt":  "2026-10-28T07:30:00.000Z",
+                      "isEdited":  false
+                  }
+    }
+]

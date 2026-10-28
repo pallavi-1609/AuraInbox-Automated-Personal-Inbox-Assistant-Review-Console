@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2026-10-28T07:59:38.494Z",
+    "type": "EMAIL_SENT",
+    "message": "Reply sent to Sarah Jenkins (sarah.jenkins@acmepartners.com)",
+    "details": "Subject: \"Q4 Enterprise Proposal Review & Scope Finalization\" | Mode: Simulated Approval"
+  },
+  {
+    "timestamp": "2026-10-28T07:59:14.171Z",
+    "type": "DRAFT_REGENERATED",
+    "message": "Draft regenerated for \"Q4 Enterprise Proposal Review & Scope Finalization\"",
+    "details": "Tone: Professional & Warm | Instructions: \"Mention I will be in executive meetings until 3 PM and will call her right after.\""
+  },
+  {
+    "timestamp": "2026-10-28T07:30:00.000Z",
+    "type": "SCAN_COMPLETED",
+    "message": "Scheduled scan completed: 4 threads identified needing replies (>3 days waiting). Drafts generated.",
+    "details": "Lookback: 7 days | Priority threshold: >=3 days"
+  },
+  {
+    "timestamp": "2026-10-28T07:30:05.000Z",
+    "type": "DRAFT_READY",
+    "message": "Draft created for Sarah Jenkins (Q4 Enterprise Proposal Review)",
+    "details": "Tone: Professional & Warm"
+  },
+  {
+    "timestamp": "2026-10-28T07:30:10.000Z",
+    "type": "DRAFT_READY",
+    "message": "Draft created for Finance Desk (Invoice #4829 Overdue Clarification)",
+    "details": "Tone: Direct & Concise"
+  }
+]
