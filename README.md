@@ -40,5 +40,5 @@ npm start
    - Go to [Google Account Security](https://myaccount.google.com/security).
    - Ensure 2-Step Verification is enabled.
    - Search for "App Passwords", generate one named "Mail", and paste the 16 characters.
-5. Click *"Test Gmail Connection" to verify.
+5. Click "Test Gmail Connection" to verify.
 6. Click "Save Preferences".
